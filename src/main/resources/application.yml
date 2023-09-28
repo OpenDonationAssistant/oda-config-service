@@ -1,0 +1,20 @@
+micronaut:
+  application:
+    name: oda-config-server
+  security:
+    authentication: cookie
+    token:
+      jwt:
+        signatures:
+          jwks:
+            keycloak:
+              url: https://auth.oda.digital/realms/ODA/protocol/openid-connect/certs
+flyway:
+  datasources:
+    default:
+      enabled: true
+      baseline-on-migrate: true
+jpa:
+  default:
+    entity-scan:
+        packages: 'io.github.stcarolas.oda.config'
