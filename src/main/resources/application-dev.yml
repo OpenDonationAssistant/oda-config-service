@@ -1,9 +1,0 @@
-datasources:
-  default:
-    url: 'jdbc:postgresql://localhost/postgres?currentSchema=config'
-    username: 'postgres'
-    password: 'postgres'
-    driverClassName: 'org.postgresql.Driver'
-endpoints:
-  flyway:
-    enabled: true

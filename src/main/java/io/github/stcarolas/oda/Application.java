@@ -7,16 +7,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
-
-  @ContextConfigurer
-  public static class Configurer implements ApplicationContextConfigurer {
-
-    @Override
-    public void configure(@NonNull ApplicationContextBuilder builder) {
-      builder.defaultEnvironments("dev");
-    }
-  }
-
   public static void main(String[] args) {
     Micronaut.build(args).banner(false).start();
   }

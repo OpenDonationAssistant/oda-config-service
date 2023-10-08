@@ -38,28 +38,33 @@ public class ConfigController {
     if (auth == null && !"paymentpage".equals(name)) {
       return HttpResponse.unauthorized();
     }
-    var owner = auth == null
-      ? ownerId
-      : String.valueOf(
-        auth.getAttributes().getOrDefault("preferred_username", "")
-      );
+    var owner = auth == null ? ownerId : getOwnerId(auth);
     return HttpResponse.ok(configRepository.find(owner, name));
   }
 
-  @Secured(SecurityRule.IS_ANONYMOUS)
+  private String getOwnerId(Authentication auth) {
+    return String.valueOf(
+      auth.getAttributes().getOrDefault("preferred_username", "")
+    );
+  }
+
+  @Secured(SecurityRule.IS_AUTHENTICATED)
   @Put(consumes = { MediaType.APPLICATION_JSON })
-  public void put(@Body ConfigValue configValue) {
+  public void put(@Body ConfigValue configValue, Authentication auth) {
     configValue.setId(UUID.randomUUID().toString());
+    configValue.setOwnerId(getOwnerId(auth));
     configRepository.save(configValue);
   }
 
-  @Secured(SecurityRule.IS_ANONYMOUS)
+  @Secured(SecurityRule.IS_AUTHENTICATED)
   @Post(value = "{id}", consumes = { MediaType.APPLICATION_JSON })
   public void update(
     @PathVariable("id") String id,
-    @Body ConfigValue configValue
+    @Body ConfigValue configValue,
+    Authentication auth
   ) {
     configValue.setId(id);
+    configValue.setOwnerId(getOwnerId(auth));
     configRepository.update(configValue);
   }
 }
