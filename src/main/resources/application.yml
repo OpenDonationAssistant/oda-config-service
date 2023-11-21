@@ -2,8 +2,11 @@ micronaut:
   application:
     name: oda-config-server
   security:
-    authentication: cookie
     token:
+      bearer:
+        enabled: true
+      cookie:
+        enabled: true
       jwt:
         signatures:
           jwks:
