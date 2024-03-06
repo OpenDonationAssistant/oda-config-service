@@ -1,6 +1,5 @@
 package io.github.stcarolas.oda.config;
 
-import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,7 +54,7 @@ public class ConfigValueAbstractFactoryTest {
     var factory = new ConfigValueAbstractFactory(mockRepository);
     var expected = Optional.of(config);
     assertEquals(expected, factory.findExisting("testuser", "testname"));
-    verify(mockRepository).find("testuser","testname");
+    verify(mockRepository).find("testuser", "testname");
   }
 
   @Test
@@ -91,5 +90,27 @@ public class ConfigValueAbstractFactoryTest {
         Map.class
       );
     assertEquals(expectedValue, config.get().getValue());
+  }
+
+  @Test
+  public void testMergingSavedWidgetConfigWithDefaultValues() {
+    Map<String, Object> configValues = Map.of(
+      "topic",
+      Map.of("alerts", "sometestvalue")
+    );
+    when(mockRepository.find(Mockito.any(), Mockito.any()))
+      .thenReturn(
+        Optional.of(new ConfigValue("id", "widgets", "testuser", configValues))
+      );
+    var factory = new ConfigValueAbstractFactory(mockRepository);
+
+    Optional<ConfigValue> config = factory.findExisting("testuser", "widgets");
+
+    assertTrue(config.isPresent());
+    ConfigValue fact = config.get();
+    assertEquals(
+      "sometestvalue",
+      ((Map<String, Object>) fact.getValue().get("topic")).get("alerts")
+    );
   }
 }

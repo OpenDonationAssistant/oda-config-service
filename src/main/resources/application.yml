@@ -12,13 +12,6 @@ micronaut:
           jwks:
             keycloak:
               url: https://auth.oda.digital/realms/ODA/protocol/openid-connect/certs
-datasources:
-  default:
-    url: ${JDBC_URL}
-    username: ${JDBC_USER:`postgres`}
-    password: ${JDBC_PASSWORD:`postgres`}
-    db-type: "postgresql"
-    driverClassName: 'org.postgresql.Driver'
 endpoints:
   flyway:
     enabled: true

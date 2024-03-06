@@ -80,4 +80,11 @@ public class ConfigValue {
   public void setId(String id) {
     this.id = id;
   }
+
+  @Override
+  public String toString() {
+    return "{\"_type\"=\"ConfigValue\",\"id\"=\"" + id + "\", name\"=\"" + name + "\", ownerId\"=\"" + ownerId
+        + "\", value\"=\"" + value + "}";
+  }
+
 }

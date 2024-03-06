@@ -4,6 +4,7 @@ import io.github.stcarolas.oda.config.values.WidgetsConfigValue;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,9 +26,31 @@ public class ConfigValueAbstractFactory {
     Objects.requireNonNull(ownerId, "Missing ownerId to search for config");
     Objects.requireNonNull(name, "Missing config's name to search for it");
     Optional<ConfigValue> value = repository.find(ownerId, name);
+    if (value.isEmpty() && "widgets".equalsIgnoreCase(name)) {
+      SaveableConfigValue widgetsValue = new SaveableConfigValue(
+        "widgets",
+        ownerId,
+        new HashMap<>(),
+        repository
+      );
+      widgetsValue.save();
+      return Optional.of(
+        new WidgetsConfigValue(
+          widgetsValue.getId(),
+          widgetsValue.getOwnerId(),
+          widgetsValue.getValue(),
+          repository
+        )
+      );
+    }
     return value.map(it ->
       "widgets".equals(it.getName())
-        ? new WidgetsConfigValue(it.getId(), it.getOwnerId(), it.getValue(), repository)
+        ? new WidgetsConfigValue(
+          it.getId(),
+          it.getOwnerId(),
+          it.getValue(),
+          repository
+        )
         : it
     );
   }

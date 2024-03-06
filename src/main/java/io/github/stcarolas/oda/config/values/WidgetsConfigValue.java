@@ -2,9 +2,12 @@ package io.github.stcarolas.oda.config.values;
 
 import io.github.stcarolas.oda.config.ConfigRepository;
 import io.github.stcarolas.oda.config.SaveableConfigValue;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.uuid.Generators;
 
 @Serdeable
 public class WidgetsConfigValue extends SaveableConfigValue {
@@ -16,13 +19,22 @@ public class WidgetsConfigValue extends SaveableConfigValue {
     ConfigRepository repository
   ) {
     super("widgets", ownerId, values, repository);
-    this.setId(id);
+    this.setId(
+        StringUtils.isEmpty(id)
+          ? Generators.timeBasedEpochGenerator().generate().toString()
+          : id
+      );
     this.setName("widgets");
 
-    var topicValues = (Map<String, Object>) values.getOrDefault(
+    if (values == null) {
+      values = new HashMap<>();
+    }
+
+    var topicValues = new HashMap((Map<String, Object>) values.getOrDefault(
       "topic",
       new HashMap<>()
-    );
+    ));
+
     defaultValues(ownerId)
       .entrySet()
       .stream()

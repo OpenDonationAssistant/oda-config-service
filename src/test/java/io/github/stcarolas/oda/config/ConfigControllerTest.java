@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MicronautTest
+@MicronautTest(environments = "allinone")
 public class ConfigControllerTest {
 
   Logger log = LoggerFactory.getLogger(ConfigControllerTest.class);

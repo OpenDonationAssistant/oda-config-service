@@ -1,0 +1,1 @@
+insert into config(id, name, owner_id, value) values ('018e139a-89e6-75cb-adc2-d02202470b14', 'paymentpage', 'testuser', '{"fio": "Иванов Иван Иванович", "inn": "111111111111", "email": "stcarolas@gmail.com", "nickname": "testuser", "arbitraryText": "приветик,  \nспасибо за донатик))", "media.requests.enabled": true}')

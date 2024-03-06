@@ -1,5 +1,5 @@
-FROM eclipse-temurin:17-jdk-jammy
+FROM fedora:39
 WORKDIR /app
-COPY target/oda-config-service-0.1.jar /app
+COPY target/oda-config-service /app
 
-CMD ["java","--add-opens","java.base/java.time=ALL-UNNAMED","-jar","oda-config-service-0.1.jar"]
+CMD ["./oda-config-service"]
