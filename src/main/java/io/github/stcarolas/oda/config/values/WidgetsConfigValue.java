@@ -35,6 +35,8 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       new HashMap<>()
     ));
 
+    var loglevel = (String) values.get("loglevel");
+
     defaultValues(ownerId)
       .entrySet()
       .stream()
@@ -43,6 +45,7 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       });
     var updated = new HashMap<>(values);
     updated.put("topic", topicValues);
+    updated.put("loglevel", StringUtils.isEmpty(loglevel) ? "error" : loglevel);
     this.setValue(updated);
   }
 

@@ -1,6 +1,7 @@
 package io.github.stcarolas.oda.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,8 @@ public class ConfigControllerTest {
           "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
           "remoteplayer": "/topic/testuserremoteplayer"
         },
-        "testkey":"testvalue"
+        "testkey":"testvalue",
+        "loglevel":"error"
       }
       """, Map.class);
     HttpResponse<ConfigValue> result = controller.get(
@@ -48,9 +50,14 @@ public class ConfigControllerTest {
       "testuser",
       auth()
     );
-    assertEquals("widgets", result.getBody().get().getName());
-    assertEquals("testuser", result.getBody().get().getOwnerId());
-    assertEquals(expectedValue, result.getBody().get().getValue());
+    ConfigValue response = result.getBody().get();
+    assertNotNull(response);
+    Map<String, Object> factValue = response.getValue();
+
+    assertNotNull(factValue);
+    assertEquals("widgets", response.getName());
+    assertEquals("testuser", response.getOwnerId());
+    assertEquals(expectedValue, response.getValue());
   }
 
   private Authentication auth() {

@@ -84,7 +84,8 @@ public class ConfigValueAbstractFactoryTest {
             "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
             "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
             "remoteplayer": "/topic/testuserremoteplayer"
-          }
+          },
+          "loglevel":"error"
         }
         """,
         Map.class
@@ -113,4 +114,26 @@ public class ConfigValueAbstractFactoryTest {
       ((Map<String, Object>) fact.getValue().get("topic")).get("alerts")
     );
   }
+
+  @Test
+  public void testUsingStoredLoglevel() {
+    Map<String, Object> configValues = Map.of(
+      "loglevel","info"
+    );
+    when(mockRepository.find(Mockito.any(), Mockito.any()))
+      .thenReturn(
+        Optional.of(new ConfigValue("id", "widgets", "testuser", configValues))
+      );
+    var factory = new ConfigValueAbstractFactory(mockRepository);
+
+    Optional<ConfigValue> config = factory.findExisting("testuser", "widgets");
+
+    assertTrue(config.isPresent());
+    ConfigValue fact = config.get();
+    assertEquals(
+      "info",
+      fact.getValue().get("loglevel")
+    );
+  }
+
 }
