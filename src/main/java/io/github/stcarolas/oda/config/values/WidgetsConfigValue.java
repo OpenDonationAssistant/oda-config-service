@@ -80,6 +80,10 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       "remoteplayer",
       "/topic/%sremoteplayer".formatted(ownerId)
     );
+    defaultValues.put(
+      "reel",
+      "/topic/%sreel".formatted(ownerId)
+    );
 
     return defaultValues;
   }
