@@ -84,6 +84,10 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       "reel",
       "/topic/%sreel".formatted(ownerId)
     );
+    defaultValues.put(
+      "goal",
+      "/topic/%sgoal".formatted(ownerId)
+    );
 
     return defaultValues;
   }
