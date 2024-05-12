@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import io.github.stcarolas.oda.config.values.PaymentPageConfigValue;
 import io.micronaut.serde.ObjectMapper;
 import java.io.IOException;
 import java.util.Map;
@@ -58,6 +59,20 @@ public class ConfigValueAbstractFactoryTest {
   }
 
   @Test
+  public void testReturnPaymentPageConfigValue() {
+    var config = new ConfigValue("paymentpage", "owner", Map.of());
+    when(mockRepository.find(Mockito.any(), Mockito.any()))
+      .thenReturn(Optional.of(config));
+    var factory = new ConfigValueAbstractFactory(mockRepository);
+    Optional<ConfigValue> actual = factory.findExisting(
+      "testuser",
+      "paymentpage"
+    );
+    assertTrue(actual.isPresent());
+    assertEquals(PaymentPageConfigValue.class, actual.get().getClass());
+  }
+
+  @Test
   public void testReturnDefaultValuesForWidgetsIfMissing() throws IOException {
     when(mockRepository.find(Mockito.any(), Mockito.any()))
       .thenReturn(Optional.empty());
@@ -83,7 +98,9 @@ public class ConfigValueAbstractFactoryTest {
             "paymentWidgetCommands": "/topic/testuserpaymentWidgetCommands",
             "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
             "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
-            "remoteplayer": "/topic/testuserremoteplayer"
+            "remoteplayer": "/topic/testuserremoteplayer",
+            "reel": "/topic/testuserreel",
+            "goal": "/topic/testusergoal"
           },
           "loglevel":"error"
         }
@@ -117,9 +134,7 @@ public class ConfigValueAbstractFactoryTest {
 
   @Test
   public void testUsingStoredLoglevel() {
-    Map<String, Object> configValues = Map.of(
-      "loglevel","info"
-    );
+    Map<String, Object> configValues = Map.of("loglevel", "info");
     when(mockRepository.find(Mockito.any(), Mockito.any()))
       .thenReturn(
         Optional.of(new ConfigValue("id", "widgets", "testuser", configValues))
@@ -130,10 +145,6 @@ public class ConfigValueAbstractFactoryTest {
 
     assertTrue(config.isPresent());
     ConfigValue fact = config.get();
-    assertEquals(
-      "info",
-      fact.getValue().get("loglevel")
-    );
+    assertEquals("info", fact.getValue().get("loglevel"));
   }
-
 }

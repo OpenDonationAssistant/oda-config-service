@@ -1,5 +1,6 @@
 package io.github.stcarolas.oda.config;
 
+import io.github.stcarolas.oda.config.values.PaymentPageConfigValue;
 import io.github.stcarolas.oda.config.values.WidgetsConfigValue;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Inject;
@@ -43,15 +44,27 @@ public class ConfigValueAbstractFactory {
         )
       );
     }
-    return value.map(it ->
-      "widgets".equals(it.getName())
-        ? new WidgetsConfigValue(
-          it.getId(),
-          it.getOwnerId(),
-          it.getValue(),
-          repository
-        )
-        : it
-    );
+    return value.map(this::construct);
+  }
+
+  private ConfigValue construct(ConfigValue widget){
+      switch (widget.getName()) {
+        case "widgets":
+          return new WidgetsConfigValue(
+            widget.getId(),
+            widget.getOwnerId(),
+            widget.getValue(),
+            repository
+          );
+        case "paymentpage":
+          return new PaymentPageConfigValue(
+            widget.getId(),
+            widget.getOwnerId(),
+            widget.getValue(),
+            repository
+          );
+        default:
+          return widget;
+      }
   }
 }

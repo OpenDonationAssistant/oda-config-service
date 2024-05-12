@@ -39,7 +39,9 @@ public class ConfigControllerTest {
           "paymentWidgetCommands": "/topic/testuserpaymentWidgetCommands",
           "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
           "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
-          "remoteplayer": "/topic/testuserremoteplayer"
+          "remoteplayer": "/topic/testuserremoteplayer",
+          "reel": "/topic/testuserreel",
+          "goal": "/topic/testusergoal"
         },
         "testkey":"testvalue",
         "loglevel":"error"
