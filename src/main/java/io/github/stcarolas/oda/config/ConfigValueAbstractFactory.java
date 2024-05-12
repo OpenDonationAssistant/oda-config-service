@@ -26,24 +26,12 @@ public class ConfigValueAbstractFactory {
   ) {
     Objects.requireNonNull(ownerId, "Missing ownerId to search for config");
     Objects.requireNonNull(name, "Missing config's name to search for it");
-    Optional<ConfigValue> value = repository.find(ownerId, name);
-    if (value.isEmpty() && "widgets".equalsIgnoreCase(name)) {
-      SaveableConfigValue widgetsValue = new SaveableConfigValue(
-        "widgets",
+    Optional<ConfigValue> value = repository.find(ownerId, name)
+    .or(() -> Optional.of(new ConfigValue(
+        name,
         ownerId,
-        new HashMap<>(),
-        repository
-      );
-      widgetsValue.save();
-      return Optional.of(
-        new WidgetsConfigValue(
-          widgetsValue.getId(),
-          widgetsValue.getOwnerId(),
-          widgetsValue.getValue(),
-          repository
-        )
-      );
-    }
+        new HashMap<>()
+      )));
     return value.map(this::construct);
   }
 

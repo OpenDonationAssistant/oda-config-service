@@ -73,6 +73,20 @@ public class ConfigValueAbstractFactoryTest {
   }
 
   @Test
+  public void testReturnDefaultPaymentPageConfig() {
+    when(mockRepository.find(Mockito.any(), Mockito.any()))
+      .thenReturn(Optional.empty());
+    var factory = new ConfigValueAbstractFactory(mockRepository);
+    Optional<ConfigValue> actual = factory.findExisting(
+      "testuser",
+      "paymentpage"
+    );
+    assertTrue(actual.isPresent());
+    assertEquals(PaymentPageConfigValue.class, actual.get().getClass());
+  }
+
+  // todo rewrite tests for widgets
+  @Test
   public void testReturnDefaultValuesForWidgetsIfMissing() throws IOException {
     when(mockRepository.find(Mockito.any(), Mockito.any()))
       .thenReturn(Optional.empty());

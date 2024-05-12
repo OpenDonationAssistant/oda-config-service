@@ -23,12 +23,10 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
       );
     this.setName("paymentpage");
 
-    if (values == null) {
-      values = new HashMap<>();
-    }
-
     Map<String, Object> merged = defaultValues();
-    values.forEach((key, value) -> merged.put(key, value));
+    if (values != null) {
+      values.forEach((key, value) -> merged.put(key, value));
+    }
     this.setValue(merged);
   }
 

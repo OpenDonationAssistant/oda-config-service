@@ -1,9 +1,11 @@
 package io.github.stcarolas.oda.config.values;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import io.github.stcarolas.oda.config.ConfigRepository;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,9 +39,9 @@ public class PaymentPageConfigValueTest {
       "ownerId",
       new HashMap<>(),
       repository
-    )
-      .getValue();
-    assertEquals(expected, actual);
+    );
+    assertTrue(StringUtils.isNotEmpty(actual.getId()));
+    assertEquals(expected, actual.getValue());
   }
 
   @Test
