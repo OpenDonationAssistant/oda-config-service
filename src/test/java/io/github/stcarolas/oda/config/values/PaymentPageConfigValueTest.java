@@ -25,7 +25,8 @@ public class PaymentPageConfigValueTest {
             "media.requests.enabled": false,
             "media.requests.disabled.permanently": true,
             "minimalAmount":40,
-            "payButtonText": "Задонатить <amount>"
+            "payButtonText": "Задонатить <amount>",
+            "customCss": ""
           }
     """;
 
