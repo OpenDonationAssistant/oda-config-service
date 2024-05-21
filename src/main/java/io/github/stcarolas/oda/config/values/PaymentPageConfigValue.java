@@ -40,6 +40,7 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("media.requests.enabled", false);
     values.put("media.requests.disabled.permanently", true);
     values.put("minimalAmount", 40);
+    values.put("payButtonText", "Задонатить <amount>");
     return values;
   }
 }

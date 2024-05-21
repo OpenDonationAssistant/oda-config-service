@@ -14,26 +14,27 @@ import org.junit.jupiter.api.Test;
 
 public class PaymentPageConfigValueTest {
 
+  private final String DEFAULT_VALUE =
+    """
+          {
+            "fio":"Иванов Иван Иванович",
+            "inn":"1122334455",
+            "email":"test@mail.com",
+            "nickname":"testuser",
+            "media.requests.cost": 100,
+            "media.requests.enabled": false,
+            "media.requests.disabled.permanently": true,
+            "minimalAmount":40,
+            "payButtonText": "Задонатить <amount>"
+          }
+    """;
+
   @Test
   public void testCreatingWithDefaultValues() throws IOException {
     var repository = mock(ConfigRepository.class);
     var expected = ObjectMapper
       .getDefault()
-      .readValue(
-        """
-        {
-          "fio":"Иванов Иван Иванович",
-          "inn":"1122334455",
-          "email":"test@mail.com",
-          "nickname":"testuser",
-          "media.requests.cost": 100,
-          "media.requests.enabled": false,
-          "media.requests.disabled.permanently": true,
-          "minimalAmount":40
-        }
-        """,
-        Map.class
-      );
+      .readValue(DEFAULT_VALUE, Map.class);
     var actual = new PaymentPageConfigValue(
       null,
       "ownerId",
@@ -49,21 +50,7 @@ public class PaymentPageConfigValueTest {
     var repository = mock(ConfigRepository.class);
     var savedValues = ObjectMapper
       .getDefault()
-      .readValue(
-        """
-        {
-          "fio":"Смирнов Лебедь Александрович",
-          "inn":"333",
-          "email":"someemail",
-          "nickname":"saved",
-          "media.requests.cost": 200,
-          "media.requests.enabled": true,
-          "media.requests.disabled.permanently": false,
-          "minimalAmount":100
-        }
-        """,
-        Map.class
-      );
+      .readValue(DEFAULT_VALUE, Map.class);
     var actual = new PaymentPageConfigValue(
       null,
       "ownerId",
