@@ -42,6 +42,7 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("minimalAmount", 40);
     values.put("payButtonText", "Задонатить <amount>");
     values.put("customCss","");
+    values.put("gateway","yookassa");
     return values;
   }
 }
