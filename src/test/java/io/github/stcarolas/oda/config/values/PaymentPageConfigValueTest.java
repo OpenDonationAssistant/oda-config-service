@@ -20,12 +20,13 @@ public class PaymentPageConfigValueTest {
             "fio":"Иванов Иван Иванович",
             "inn":"1122334455",
             "email":"test@mail.com",
-            "nickname":"testuser",
+            "nickname":"ownerId",
             "media.requests.cost": 100,
             "media.requests.enabled": false,
             "media.requests.disabled.permanently": true,
             "minimalAmount":40,
             "payButtonText": "Задонатить <amount>",
+            "gateway":"yookassa",
             "customCss": ""
           }
     """;

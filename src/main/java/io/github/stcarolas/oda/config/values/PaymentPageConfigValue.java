@@ -23,19 +23,19 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
       );
     this.setName("paymentpage");
 
-    Map<String, Object> merged = defaultValues();
+    Map<String, Object> merged = defaultValues(ownerId);
     if (values != null) {
       values.forEach((key, value) -> merged.put(key, value));
     }
     this.setValue(merged);
   }
 
-  public Map<String, Object> defaultValues() {
+  public Map<String, Object> defaultValues(String ownerId) {
     HashMap<String, Object> values = new HashMap<String, Object>();
     values.put("fio", "Иванов Иван Иванович");
     values.put("inn", "1122334455");
     values.put("email", "test@mail.com");
-    values.put("nickname", "testuser");
+    values.put("nickname", ownerId);
     values.put("media.requests.cost", 100);
     values.put("media.requests.enabled", false);
     values.put("media.requests.disabled.permanently", true);
