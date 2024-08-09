@@ -67,7 +67,11 @@ public class ConfigController {
   ) {
     configValue.setId(id);
     configValue.setOwnerId(getOwnerId(auth));
-    configRepository.update(configValue);
+    if (configRepository.existsById(id)) {
+      configRepository.update(configValue);
+    } else {
+      configRepository.save(configValue);
+    }
   }
 
   private String getOwnerId(Authentication auth) {
