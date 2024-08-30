@@ -22,7 +22,10 @@ public class PaymentPageConfigValueTest {
             "email":"test@mail.com",
             "nickname":"ownerId",
             "media.requests.cost": 100,
-            "media.requests.enabled": false,
+            "media.requests.enabled": true,
+            "url":[
+              { "twitch":"https://twitch.tv/ownerId" }
+            ],
             "media.requests.disabled.permanently": true,
             "minimalAmount":40,
             "payButtonText": "Задонатить <amount>",

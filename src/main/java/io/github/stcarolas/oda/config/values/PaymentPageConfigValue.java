@@ -5,6 +5,7 @@ import io.github.stcarolas.oda.config.ConfigRepository;
 import io.github.stcarolas.oda.config.SaveableConfigValue;
 import io.micronaut.core.util.StringUtils;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PaymentPageConfigValue extends SaveableConfigValue {
@@ -37,12 +38,16 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("email", "test@mail.com");
     values.put("nickname", ownerId);
     values.put("media.requests.cost", 100);
-    values.put("media.requests.enabled", false);
+    values.put("media.requests.enabled", true);
     values.put("media.requests.disabled.permanently", true);
     values.put("minimalAmount", 40);
     values.put("payButtonText", "Задонатить <amount>");
-    values.put("customCss","");
-    values.put("gateway","yookassa");
+    values.put("customCss", "");
+    values.put("gateway", "yookassa");
+    values.put(
+      "url",
+      List.of(Map.of("twitch", "https://twitch.tv/" + ownerId))
+    );
     return values;
   }
 }
