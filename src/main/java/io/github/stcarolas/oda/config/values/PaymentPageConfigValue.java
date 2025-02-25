@@ -48,6 +48,14 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
       "url",
       List.of(Map.of("twitch", "https://twitch.tv/" + ownerId))
     );
+    values.put("limits.char", charLimits());
+    return values;
+  }
+
+  public Map<String, Object> charLimits(){
+    HashMap<String, Object> values = new HashMap<String, Object>();
+    values.put("type", "fixed");
+    values.put("value", 300);
     return values;
   }
 }
