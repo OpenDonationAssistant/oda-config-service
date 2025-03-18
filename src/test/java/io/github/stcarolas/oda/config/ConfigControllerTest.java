@@ -41,7 +41,8 @@ public class ConfigControllerTest {
           "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
           "remoteplayer": "/topic/testuserremoteplayer",
           "reel": "/topic/testuserreel",
-          "goal": "/topic/testusergoal"
+          "goal": "/topic/testusergoal",
+          "donaterstoplist": "/topic/testuserdonaterstoplist"
         },
         "testkey":"testvalue",
         "loglevel":"error"

@@ -114,7 +114,8 @@ public class ConfigValueAbstractFactoryTest {
             "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
             "remoteplayer": "/topic/testuserremoteplayer",
             "reel": "/topic/testuserreel",
-            "goal": "/topic/testusergoal"
+            "goal": "/topic/testusergoal",
+            "donaterstoplist": "/topic/testuserdonaterstoplist"
           },
           "loglevel":"error"
         }

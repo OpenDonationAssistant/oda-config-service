@@ -88,6 +88,10 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       "goal",
       "/topic/%sgoal".formatted(ownerId)
     );
+    defaultValues.put(
+      "donaterstoplist",
+      "/topic/%sdonaterstoplist".formatted(ownerId)
+    );
 
     return defaultValues;
   }
