@@ -23,6 +23,8 @@
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
     <micronaut.aot.packageName>io.github.stcarolas.oda.aot.generated</micronaut.aot.packageName>
     <exec.mainClass>io.github.stcarolas.oda.Application</exec.mainClass>
+    <sonar.organization>opendonationassistant</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
   <!--#endregion-->
   <!--#region repositories-->
@@ -35,6 +37,13 @@
   <!--#endregion-->
   <!--#region dependencies-->
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.27.3</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
@@ -109,7 +118,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>5.10.0</version>
+      <version>5.16.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

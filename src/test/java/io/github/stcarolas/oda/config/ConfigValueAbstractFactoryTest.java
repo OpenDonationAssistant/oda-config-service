@@ -97,6 +97,7 @@ public class ConfigValueAbstractFactoryTest {
     assertTrue(config.isPresent());
     assertEquals("widgets", config.get().getName());
     assertEquals("testuser", config.get().getOwnerId());
+    // TODO: remove duplication from controller test with json
     var expectedValue = ObjectMapper
       .getDefault()
       .readValue(
@@ -115,7 +116,8 @@ public class ConfigValueAbstractFactoryTest {
             "remoteplayer": "/topic/testuserremoteplayer",
             "reel": "/topic/testuserreel",
             "goal": "/topic/testusergoal",
-            "donaterstoplist": "/topic/testuserdonaterstoplist"
+            "donaterstoplist": "/topic/testuserdonaterstoplist",
+            "variables":"/topic/testuservariables"
           },
           "loglevel":"error"
         }

@@ -3,6 +3,7 @@ package io.github.stcarolas.oda.config.values;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.assertj.core.api.Assertions.*;
 
 import io.github.stcarolas.oda.config.ConfigRepository;
 import io.micronaut.core.util.StringUtils;
@@ -21,6 +22,7 @@ public class PaymentPageConfigValueTest {
             "inn":"1122334455",
             "email":"test@mail.com",
             "nickname":"ownerId",
+            "limits.char": {"type":"fixed", "value":300},
             "media.requests.cost": 100,
             "media.requests.enabled": true,
             "url":[
@@ -46,8 +48,9 @@ public class PaymentPageConfigValueTest {
       new HashMap<>(),
       repository
     );
+    assertThat(expected).isEqualTo(actual.getValue());
     assertTrue(StringUtils.isNotEmpty(actual.getId()));
-    assertEquals(expected, actual.getValue());
+    // assertEquals(expected, actual.getValue());
   }
 
   @Test
@@ -63,6 +66,7 @@ public class PaymentPageConfigValueTest {
       repository
     )
       .getValue();
-    assertEquals(savedValues, actual);
+    assertThat(savedValues).isEqualTo(actual);
+    // assertEquals(savedValues, actual);
   }
 }

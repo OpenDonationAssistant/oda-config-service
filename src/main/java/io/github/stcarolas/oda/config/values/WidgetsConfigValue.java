@@ -92,6 +92,10 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       "donaterstoplist",
       "/topic/%sdonaterstoplist".formatted(ownerId)
     );
+    defaultValues.put(
+      "variables",
+      "/topic/%svariables".formatted(ownerId)
+    );
 
     return defaultValues;
   }

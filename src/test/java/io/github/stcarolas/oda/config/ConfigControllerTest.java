@@ -9,7 +9,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.serde.ObjectMapper;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-
 import java.io.IOException;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -22,32 +21,38 @@ public class ConfigControllerTest {
   Logger log = LoggerFactory.getLogger(ConfigControllerTest.class);
 
   @Test
-  public void testPutAndGetConfigValue(ConfigController controller) throws IOException {
+  public void testPutAndGetConfigValue(ConfigController controller)
+    throws IOException {
     ConfigValue config = new ConfigValue();
     config.setName("widgets");
     config.setValue(Map.of("testkey", "testvalue"));
     controller.put(config, auth());
-    var expectedValue = ObjectMapper.getDefault().readValue("""
-      {
-        "topic": {
-          "alerts": "/topic/testuseralerts",
-          "alertStatus": "/topic/testuseralertStatus",
-          "alertWidgetCommans": "/topic/testuseralertWidgetCommands",
-          "player": "/topic/testuserplayer",
-          "playerCommands": "/topic/testuserplayerCommands",
-          "media": "/topic/testusermedia",
-          "paymentWidgetCommands": "/topic/testuserpaymentWidgetCommands",
-          "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
-          "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
-          "remoteplayer": "/topic/testuserremoteplayer",
-          "reel": "/topic/testuserreel",
-          "goal": "/topic/testusergoal",
-          "donaterstoplist": "/topic/testuserdonaterstoplist"
-        },
-        "testkey":"testvalue",
-        "loglevel":"error"
-      }
-      """, Map.class);
+    var expectedValue = ObjectMapper.getDefault()
+      .readValue(
+        """
+        {
+          "topic": {
+            "alerts": "/topic/testuseralerts",
+            "alertStatus": "/topic/testuseralertStatus",
+            "alertWidgetCommans": "/topic/testuseralertWidgetCommands",
+            "player": "/topic/testuserplayer",
+            "playerCommands": "/topic/testuserplayerCommands",
+            "media": "/topic/testusermedia",
+            "paymentWidgetCommands": "/topic/testuserpaymentWidgetCommands",
+            "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
+            "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
+            "remoteplayer": "/topic/testuserremoteplayer",
+            "reel": "/topic/testuserreel",
+            "goal": "/topic/testusergoal",
+            "donaterstoplist": "/topic/testuserdonaterstoplist",
+            "variables":"/topic/testuservariables"
+          },
+          "testkey":"testvalue",
+          "loglevel":"error"
+        }
+        """,
+        Map.class
+      );
     HttpResponse<ConfigValue> result = controller.get(
       "widgets",
       "testuser",
@@ -65,8 +70,9 @@ public class ConfigControllerTest {
 
   private Authentication auth() {
     Authentication auth = mock(Authentication.class);
-    when(auth.getAttributes())
-      .thenReturn(Map.of("preferred_username", "testuser"));
+    when(auth.getAttributes()).thenReturn(
+      Map.of("preferred_username", "testuser")
+    );
     return auth;
   }
 }
