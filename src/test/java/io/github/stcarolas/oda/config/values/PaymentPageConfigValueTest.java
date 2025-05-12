@@ -32,6 +32,7 @@ public class PaymentPageConfigValueTest {
             "minimalAmount":40,
             "payButtonText": "Задонатить <amount>",
             "gateway":"yookassa",
+            "streamer.description":"российский игровой стример. Эта страница для сбора средств на развитие и поддержку канала.",
             "customCss": ""
           }
     """;

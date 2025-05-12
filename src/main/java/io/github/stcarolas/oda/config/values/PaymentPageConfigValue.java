@@ -45,6 +45,10 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("customCss", "");
     values.put("gateway", "yookassa");
     values.put(
+      "streamer.description",
+      "российский игровой стример. Эта страница для сбора средств на развитие и поддержку канала."
+    );
+    values.put(
       "url",
       List.of(Map.of("twitch", "https://twitch.tv/" + ownerId))
     );
@@ -52,7 +56,7 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     return values;
   }
 
-  public Map<String, Object> charLimits(){
+  public Map<String, Object> charLimits() {
     HashMap<String, Object> values = new HashMap<String, Object>();
     values.put("type", "fixed");
     values.put("value", 300);
