@@ -25,6 +25,8 @@ public class PaymentPageConfigValueTest {
             "limits.char": {"type":"fixed", "value":300},
             "media.requests.cost": 100,
             "media.requests.enabled": true,
+            "media.requests.amount": 12,
+            "media.requests.tooltip": "",
             "url":[
               { "twitch":"https://twitch.tv/ownerId" }
             ],
