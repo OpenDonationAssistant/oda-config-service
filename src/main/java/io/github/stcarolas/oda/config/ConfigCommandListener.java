@@ -34,7 +34,7 @@ public class ConfigCommandListener {
       Map<String, Object> values = conf.getValue();
       values.put(command.getKey(), command.getValue());
       conf.setValue(values);
-      log.info("Updated config:{}", conf);
+      log.debug("Updated config:{}", conf);
       repository.update(conf);
     });
   }
