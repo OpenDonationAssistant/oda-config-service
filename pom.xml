@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.stcarolas.oda</groupId>
+  <groupId>io.github.opendonationassistant</groupId>
   <artifactId>oda-config-service</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
-  <!--#region parent-->
   <parent>
     <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
     <version>4.2.3</version>
   </parent>
-  <!--#endregion-->
-  <!--#region properties-->
   <properties>
     <packaging>jar</packaging>
     <jdk.version>17</jdk.version>
@@ -21,23 +18,18 @@
     <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
     <micronaut.aot.enabled>false</micronaut.aot.enabled>
-    <micronaut.aot.packageName>io.github.stcarolas.oda.aot.generated</micronaut.aot.packageName>
-    <exec.mainClass>io.github.stcarolas.oda.Application</exec.mainClass>
+    <micronaut.aot.packageName>io.github.opendonationassistant.aot.generated</micronaut.aot.packageName>
+    <exec.mainClass>io.github.opendonationassistant.Application</exec.mainClass>
     <sonar.organization>opendonationassistant</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
-  <!--#endregion-->
-  <!--#region repositories-->
   <repositories>
     <repository>
       <id>central</id>
       <url>https://repo.maven.apache.org/maven2</url>
     </repository>
   </repositories>
-  <!--#endregion-->
-  <!--#region dependencies-->
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -49,7 +41,6 @@
       <artifactId>java-uuid-generator</artifactId>
       <version>5.0.0</version>
     </dependency>
-    <!-- #region http-server -->
     <dependency>
       <groupId>io.micronaut.problem</groupId>
       <artifactId>micronaut-problem-json</artifactId>
@@ -75,8 +66,6 @@
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-jackson-databind</artifactId>
     </dependency>
-    <!-- #endregion -->
-    <!-- #region security -->
     <dependency>
       <groupId>io.micronaut.security</groupId>
       <artifactId>micronaut-security-jwt</artifactId>
@@ -87,8 +76,6 @@
       <artifactId>micronaut-security-oauth2</artifactId>
       <scope>compile</scope>
     </dependency>
-    <!-- #endregion security -->
-    <!-- #region sql-->
     <dependency>
       <groupId>io.micronaut.flyway</groupId>
       <artifactId>micronaut-flyway</artifactId>
@@ -113,8 +100,6 @@
       <artifactId>micronaut-rabbitmq</artifactId>
       <scope>compile</scope>
     </dependency>
-    <!-- #endregion -->
-    <!-- #region test -->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -157,8 +142,6 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- #endregion test -->
-    <!-- #region tools -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -169,12 +152,8 @@
       <artifactId>snakeyaml</artifactId>
       <scope>runtime</scope>
     </dependency>
-    <!-- #endregion tools -->
   </dependencies>
-  <!--#endregion-->
-  <!-- #region build -->
   <build>
-    <!--#region plugins-->
     <plugins>
       <plugin>
         <groupId>io.micronaut.maven</groupId>
@@ -234,13 +213,11 @@
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=io.github.stcarolas.oda</arg>
+            <arg>-Amicronaut.processing.group=io.github.opendonationassistant</arg>
             <arg>-Amicronaut.processing.module=oda-config-service</arg>
           </compilerArgs>
         </configuration>
       </plugin>
     </plugins>
-    <!--#endregion-->
   </build>
-  <!--#endregion-->
 </project>
