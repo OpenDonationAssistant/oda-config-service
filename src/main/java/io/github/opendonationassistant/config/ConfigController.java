@@ -49,11 +49,7 @@ public class ConfigController extends BaseController {
     }
     return getOwnerId(auth)
       .or(() -> Optional.ofNullable(ownerId))
-      .map(id ->
-        factory
-          .findExisting(id, name)
-          .orElseGet(() -> factory.create(name, id, url, new HashMap<>()))
-      )
+      .flatMap(id -> factory.findExisting(id, name))
       .or(() ->
         Optional.ofNullable(url).map(it ->
           factory
