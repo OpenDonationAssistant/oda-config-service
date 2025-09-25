@@ -1,9 +1,6 @@
-package io.github.stcarolas.oda.config.values;
+package io.github.opendonationassistant.config.values;
 
-import com.fasterxml.uuid.Generators;
-import io.github.stcarolas.oda.config.ConfigRepository;
-import io.github.stcarolas.oda.config.SaveableConfigValue;
-import io.micronaut.core.util.StringUtils;
+import io.github.opendonationassistant.config.ConfigRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +10,11 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
   public PaymentPageConfigValue(
     String id,
     String ownerId,
+    String url,
     Map<String, Object> values,
     ConfigRepository repository
   ) {
-    super("paymentpage", ownerId, values, repository);
-    this.setId(
-        StringUtils.isEmpty(id)
-          ? Generators.timeBasedEpochGenerator().generate().toString()
-          : id
-      );
+    super(id, "paymentpage", ownerId, url, values, repository);
     this.setName("paymentpage");
 
     Map<String, Object> merged = defaultValues(ownerId);

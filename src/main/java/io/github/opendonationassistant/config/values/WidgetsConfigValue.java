@@ -1,13 +1,10 @@
-package io.github.stcarolas.oda.config.values;
+package io.github.opendonationassistant.config.values;
 
-import io.github.stcarolas.oda.config.ConfigRepository;
-import io.github.stcarolas.oda.config.SaveableConfigValue;
+import io.github.opendonationassistant.config.ConfigRepository;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.fasterxml.uuid.Generators;
 
 @Serdeable
 public class WidgetsConfigValue extends SaveableConfigValue {
@@ -15,25 +12,18 @@ public class WidgetsConfigValue extends SaveableConfigValue {
   public WidgetsConfigValue(
     String id,
     String ownerId,
+    String url,
     java.util.Map<String, Object> values,
     ConfigRepository repository
   ) {
-    super("widgets", ownerId, values, repository);
-    this.setId(
-        StringUtils.isEmpty(id)
-          ? Generators.timeBasedEpochGenerator().generate().toString()
-          : id
-      );
-    this.setName("widgets");
-
+    super(id, "widgets", ownerId, url, values, repository);
     if (values == null) {
       values = new HashMap<>();
     }
 
-    var topicValues = new HashMap((Map<String, Object>) values.getOrDefault(
-      "topic",
-      new HashMap<>()
-    ));
+    var topicValues = new HashMap(
+      (Map<String, Object>) values.getOrDefault("topic", new HashMap<>())
+    );
 
     var loglevel = (String) values.get("loglevel");
 
@@ -80,22 +70,13 @@ public class WidgetsConfigValue extends SaveableConfigValue {
       "remoteplayer",
       "/topic/%sremoteplayer".formatted(ownerId)
     );
-    defaultValues.put(
-      "reel",
-      "/topic/%sreel".formatted(ownerId)
-    );
-    defaultValues.put(
-      "goal",
-      "/topic/%sgoal".formatted(ownerId)
-    );
+    defaultValues.put("reel", "/topic/%sreel".formatted(ownerId));
+    defaultValues.put("goal", "/topic/%sgoal".formatted(ownerId));
     defaultValues.put(
       "donaterstoplist",
       "/topic/%sdonaterstoplist".formatted(ownerId)
     );
-    defaultValues.put(
-      "variables",
-      "/topic/%svariables".formatted(ownerId)
-    );
+    defaultValues.put("variables", "/topic/%svariables".formatted(ownerId));
 
     return defaultValues;
   }

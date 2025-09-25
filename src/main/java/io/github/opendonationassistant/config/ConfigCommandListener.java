@@ -1,20 +1,21 @@
-package io.github.stcarolas.oda.config;
+package io.github.opendonationassistant.config;
 
+import io.github.opendonationassistant.commons.logging.ODALogger;
+import io.github.opendonationassistant.config.values.ConfigValue;
 import io.micronaut.rabbitmq.annotation.Queue;
 import io.micronaut.rabbitmq.annotation.RabbitListener;
+import jakarta.inject.Inject;
 import java.util.Map;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RabbitListener
 public class ConfigCommandListener {
 
-  private Logger log = LoggerFactory.getLogger(ConfigCommandListener.class);
-
+  private final ODALogger log = new ODALogger(this);
   private final ConfigValueAbstractFactory factory;
   private final ConfigRepository repository;
 
+  @Inject
   public ConfigCommandListener(
     ConfigValueAbstractFactory factory,
     ConfigRepository repository
@@ -23,9 +24,9 @@ public class ConfigCommandListener {
     this.repository = repository;
   }
 
-  @Queue(RabbitConfiguration.COMMANDS_QUEUE_NAME)
+  @Queue(io.github.opendonationassistant.rabbit.Queue.Commands.CONFIG)
   public void listen(ConfigPutCommand command) {
-    log.info("Received command: {}", command);
+    log.info("Received ConfigPutCommand", Map.of("command", command));
     Optional<ConfigValue> config = factory.findExisting(
       command.getOwnerId(),
       command.getName()
@@ -34,7 +35,7 @@ public class ConfigCommandListener {
       Map<String, Object> values = conf.getValue();
       values.put(command.getKey(), command.getValue());
       conf.setValue(values);
-      log.debug("Updated config:{}", conf);
+      log.debug("Updated config", Map.of("config", conf));
       repository.update(conf);
     });
   }

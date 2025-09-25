@@ -1,10 +1,11 @@
-package io.github.stcarolas.oda.config;
+package io.github.opendonationassistant.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import io.github.opendonationassistant.config.values.ConfigValue;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.serde.ObjectMapper;
@@ -23,9 +24,13 @@ public class ConfigControllerTest {
   @Test
   public void testPutAndGetConfigValue(ConfigController controller)
     throws IOException {
-    ConfigValue config = new ConfigValue();
-    config.setName("widgets");
-    config.setValue(Map.of("testkey", "testvalue"));
+    ConfigValue config = new ConfigValue(
+      "id",
+      "widgets",
+      "testuser",
+      "url",
+      Map.of("testkey", "testvalue")
+    );
     controller.put(config, auth());
     var expectedValue = ObjectMapper.getDefault()
       .readValue(
@@ -56,6 +61,7 @@ public class ConfigControllerTest {
     HttpResponse<ConfigValue> result = controller.get(
       "widgets",
       "testuser",
+      "",
       auth()
     );
     ConfigValue response = result.getBody().get();

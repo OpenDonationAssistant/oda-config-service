@@ -1,6 +1,5 @@
-package io.github.stcarolas.oda.config;
+package io.github.opendonationassistant.config.values;
 
-import com.fasterxml.uuid.Generators;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.data.annotation.MappedProperty;
@@ -15,38 +14,36 @@ public class ConfigValue {
   @Id
   private String id;
 
-  @MappedProperty(value = "name")
   private String name;
 
   @MappedProperty(value = "owner_id")
   private String ownerId;
 
+  private String url;
+
   @MappedProperty(type = DataType.JSON)
   private java.util.Map<String, Object> value;
-
-  public ConfigValue() {
-    this.id = Generators.timeBasedEpochGenerator().generate().toString();
-  }
-
-  public ConfigValue(String name, String ownerId, Map<String, Object> value) {
-    this(
-      Generators.timeBasedEpochGenerator().generate().toString(),
-      name,
-      ownerId,
-      value
-    );
-  }
 
   public ConfigValue(
     String id,
     String name,
     String ownerId,
+    String url,
     Map<String, Object> value
   ) {
     this.id = id;
     this.name = name;
     this.ownerId = ownerId;
+    this.url = url;
     this.value = value;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -65,6 +62,14 @@ public class ConfigValue {
     this.ownerId = ownerId;
   }
 
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
   public java.util.Map<String, Object> getValue() {
     return value;
   }
@@ -72,19 +77,4 @@ public class ConfigValue {
   public void setValue(java.util.Map<String, Object> value) {
     this.value = value;
   }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  @Override
-  public String toString() {
-    return "{\"_type\"=\"ConfigValue\",\"id\"=\"" + id + "\", name\"=\"" + name + "\", ownerId\"=\"" + ownerId
-        + "\", value\"=\"" + value + "}";
-  }
-
 }

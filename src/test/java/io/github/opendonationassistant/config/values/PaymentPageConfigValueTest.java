@@ -1,11 +1,10 @@
-package io.github.stcarolas.oda.config.values;
+package io.github.opendonationassistant.config.values;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.assertj.core.api.Assertions.*;
 
-import io.github.stcarolas.oda.config.ConfigRepository;
+import io.github.opendonationassistant.config.ConfigRepository;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.ObjectMapper;
 import java.io.IOException;
@@ -42,34 +41,31 @@ public class PaymentPageConfigValueTest {
   @Test
   public void testCreatingWithDefaultValues() throws IOException {
     var repository = mock(ConfigRepository.class);
-    var expected = ObjectMapper
-      .getDefault()
+    var expected = ObjectMapper.getDefault()
       .readValue(DEFAULT_VALUE, Map.class);
     var actual = new PaymentPageConfigValue(
-      null,
+      "id",
       "ownerId",
+      "url",
       new HashMap<>(),
       repository
     );
-    assertThat(expected).isEqualTo(actual.getValue());
+    assertEquals(expected, actual.getValue());
     assertTrue(StringUtils.isNotEmpty(actual.getId()));
-    // assertEquals(expected, actual.getValue());
   }
 
   @Test
   public void testUsingSavedValues() throws IOException {
     var repository = mock(ConfigRepository.class);
-    var savedValues = ObjectMapper
-      .getDefault()
+    var savedValues = ObjectMapper.getDefault()
       .readValue(DEFAULT_VALUE, Map.class);
     var actual = new PaymentPageConfigValue(
-      null,
+      "id",
       "ownerId",
+      "url",
       savedValues,
       repository
-    )
-      .getValue();
-    assertThat(savedValues).isEqualTo(actual);
-    // assertEquals(savedValues, actual);
+    ).getValue();
+    assertEquals(savedValues, actual);
   }
 }
