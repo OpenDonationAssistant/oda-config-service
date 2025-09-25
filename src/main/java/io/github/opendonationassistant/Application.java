@@ -1,9 +1,12 @@
 package io.github.opendonationassistant;
 
+import io.github.opendonationassistant.rabbit.RabbitConfiguration;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
 import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.rabbitmq.connect.ChannelInitializer;
 import io.micronaut.runtime.Micronaut;
+import jakarta.inject.Singleton;
 
 public class Application {
 
@@ -19,5 +22,10 @@ public class Application {
 
   public static void main(String[] args) {
     Micronaut.build(args).mainClass(Application.class).banner(false).start();
+  }
+
+  @Singleton
+  public ChannelInitializer rabbitConfiguration() {
+    return new RabbitConfiguration();
   }
 }
