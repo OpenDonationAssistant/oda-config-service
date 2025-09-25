@@ -11,6 +11,6 @@ jobs:
     uses: "OpenDonationAssistant/oda-libraries/.github/workflows/release_service.yml@master"
     secrets: inherit
     with:
-      service: news-service
+      service: config-service
       version: "${{ github.RUN_NUMBER }}"
       npm: false
