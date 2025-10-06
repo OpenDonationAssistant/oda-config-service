@@ -40,6 +40,7 @@ public class ConfigCommandListener {
       handlePutCommand(
         mapper.readValue(command, ConfigCommand.PutKeyValue.class)
       ); // TODO переделать всех на PutKeyValue
+      return;
     }
     switch (type) {
       case "UpsertAction" -> {
