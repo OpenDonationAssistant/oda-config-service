@@ -4,6 +4,7 @@ import io.github.opendonationassistant.config.ConfigRepository;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Serdeable
@@ -16,7 +17,7 @@ public class WidgetsConfigValue extends SaveableConfigValue {
     java.util.Map<String, Object> values,
     ConfigRepository repository
   ) {
-    super(id, "widgets", ownerId, url, values, repository);
+    super(id, "widgets", ownerId, url, values, List.of(), repository);
     if (values == null) {
       values = new HashMap<>();
     }

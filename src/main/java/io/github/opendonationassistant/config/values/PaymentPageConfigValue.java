@@ -1,9 +1,11 @@
 package io.github.opendonationassistant.config.values;
 
 import io.github.opendonationassistant.config.ConfigRepository;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PaymentPageConfigValue extends SaveableConfigValue {
 
@@ -12,9 +14,10 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     String ownerId,
     String url,
     Map<String, Object> values,
+    List<Action> actions,
     ConfigRepository repository
   ) {
-    super(id, "paymentpage", ownerId, url, values, repository);
+    super(id, "paymentpage", ownerId, url, values, actions, repository);
     this.setName("paymentpage");
 
     Map<String, Object> merged = defaultValues(ownerId);
@@ -56,5 +59,31 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("type", "fixed");
     values.put("value", 300);
     return values;
+  }
+
+  public void upsertAction(Action action) {
+    AtomicBoolean found = new AtomicBoolean(false);
+    var updated = new ArrayList<>(
+      getActions()
+        .stream()
+        .map(item -> {
+          if (item.id().equals(action.id())) {
+            found.set(true);
+            return action;
+          }
+          return item;
+        })
+        .toList()
+    );
+    if (!found.get()) {
+      updated.add(action);
+    }
+    setActions(updated);
+  }
+
+  public void removeAction(String id) {
+    setActions(
+      getActions().stream().filter(item -> !item.id().equals(id)).toList()
+    );
   }
 }

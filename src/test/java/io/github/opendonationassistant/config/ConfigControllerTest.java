@@ -11,6 +11,7 @@ import io.micronaut.security.authentication.Authentication;
 import io.micronaut.serde.ObjectMapper;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -29,7 +30,8 @@ public class ConfigControllerTest {
       "widgets",
       "testuser",
       "url",
-      Map.of("testkey", "testvalue")
+      Map.of("testkey", "testvalue"),
+      List.of()
     );
     controller.put(config, auth());
     var expectedValue = ObjectMapper.getDefault()

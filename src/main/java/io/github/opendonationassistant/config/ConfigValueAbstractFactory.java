@@ -7,6 +7,7 @@ import io.github.opendonationassistant.config.values.WidgetsConfigValue;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class ConfigValueAbstractFactory {
         ownerId,
         url.isBlank() ? "%s.oda.digital".formatted(ownerId) : url,
         value,
+        List.of(),
         repository
       );
       case "widgets" -> new WidgetsConfigValue(
@@ -58,7 +60,7 @@ public class ConfigValueAbstractFactory {
         value,
         repository
       );
-      default -> new ConfigValue(id, name, ownerId, url, value);
+      default -> new ConfigValue(id, name, ownerId, url, value, List.of());
     };
   }
 
@@ -78,6 +80,7 @@ public class ConfigValueAbstractFactory {
           widget.getOwnerId(),
           widget.getUrl(),
           widget.getValue(),
+          widget.getActions(),
           repository
         );
       default:

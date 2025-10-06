@@ -1,10 +1,12 @@
 package io.github.opendonationassistant.config.values;
 
+import io.github.opendonationassistant.commons.Amount;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.data.annotation.MappedProperty;
 import io.micronaut.data.model.DataType;
 import io.micronaut.serde.annotation.Serdeable;
+import java.util.List;
 import java.util.Map;
 
 @Serdeable
@@ -22,20 +24,25 @@ public class ConfigValue {
   private String url;
 
   @MappedProperty(type = DataType.JSON)
-  private java.util.Map<String, Object> value;
+  private Map<String, Object> value;
+
+  @MappedProperty(type = DataType.JSON)
+  private List<Action> actions;
 
   public ConfigValue(
     String id,
     String name,
     String ownerId,
     String url,
-    Map<String, Object> value
+    Map<String, Object> value,
+    List<Action> actions
   ) {
     this.id = id;
     this.name = name;
     this.ownerId = ownerId;
     this.url = url;
     this.value = value;
+    this.actions = actions;
   }
 
   public String getId() {
@@ -77,4 +84,21 @@ public class ConfigValue {
   public void setValue(java.util.Map<String, Object> value) {
     this.value = value;
   }
+
+  public List<Action> getActions() {
+    return actions;
+  }
+
+  public void setActions(List<Action> actions) {
+    this.actions = actions;
+  }
+
+  @Serdeable
+  public static record Action(
+    String id,
+    String name,
+    Amount price,
+    String category,
+    String game
+  ) {}
 }

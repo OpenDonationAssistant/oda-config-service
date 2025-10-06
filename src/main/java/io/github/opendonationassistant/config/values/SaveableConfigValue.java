@@ -1,9 +1,9 @@
 package io.github.opendonationassistant.config.values;
 
+import io.github.opendonationassistant.config.ConfigRepository;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import io.github.opendonationassistant.config.ConfigRepository;
 
 public class SaveableConfigValue extends ConfigValue {
 
@@ -15,9 +15,10 @@ public class SaveableConfigValue extends ConfigValue {
     String ownerId,
     String url,
     Map<String, Object> value,
+    List<Action> actions,
     ConfigRepository repository
   ) {
-    super(id, name, ownerId, url, value);
+    super(id, name, ownerId, url, value, actions);
     this.repository = repository;
   }
 

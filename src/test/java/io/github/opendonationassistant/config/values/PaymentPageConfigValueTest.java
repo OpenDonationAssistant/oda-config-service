@@ -4,14 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import io.github.opendonationassistant.commons.Amount;
 import io.github.opendonationassistant.config.ConfigRepository;
+import io.github.opendonationassistant.config.values.ConfigValue.Action;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.instancio.junit.Given;
+import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(InstancioExtension.class)
 public class PaymentPageConfigValueTest {
 
   private final String DEFAULT_VALUE =
@@ -48,6 +55,7 @@ public class PaymentPageConfigValueTest {
       "ownerId",
       "url",
       new HashMap<>(),
+      List.of(),
       repository
     );
     assertEquals(expected, actual.getValue());
@@ -64,8 +72,48 @@ public class PaymentPageConfigValueTest {
       "ownerId",
       "url",
       savedValues,
+      List.of(),
       repository
     ).getValue();
     assertEquals(savedValues, actual);
+  }
+
+  @Test
+  public void testAddingNewAction(@Given Action action) {
+    var repository = mock(ConfigRepository.class);
+    var config = new PaymentPageConfigValue(
+      "id",
+      "ownerId",
+      "url",
+      new HashMap<>(),
+      List.of(),
+      repository
+    );
+    config.upsertAction(action);
+    assertEquals(List.of(action), config.getActions());
+  }
+
+  @Test
+  public void testUpdatingAction(@Given Action action) {
+    var repository = mock(ConfigRepository.class);
+    var config = new PaymentPageConfigValue(
+      "id",
+      "ownerId",
+      "url",
+      new HashMap<>(),
+      List.of(action),
+      repository
+    );
+    assertEquals(List.of(action), config.getActions());
+
+    var updated = new Action(
+      action.id(),
+      "new name",
+      new Amount(100, 0, "RUB"),
+      "category",
+      "new game"
+    );
+    config.upsertAction(updated);
+    assertEquals(List.of(updated), config.getActions());
   }
 }

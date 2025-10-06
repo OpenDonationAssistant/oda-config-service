@@ -1,7 +1,6 @@
 package io.github.opendonationassistant.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -12,6 +11,7 @@ import io.github.opendonationassistant.config.values.PaymentPageConfigValue;
 import io.github.opendonationassistant.config.values.WidgetsConfigValue;
 import io.micronaut.serde.ObjectMapper;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Disabled;
@@ -29,7 +29,8 @@ public class ConfigValueAbstractFactoryTest {
       "testname",
       "testuser",
       "url",
-      Map.of("testkey", "testvalue")
+      Map.of("testkey", "testvalue"),
+      List.of()
     );
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(config)
@@ -42,7 +43,7 @@ public class ConfigValueAbstractFactoryTest {
 
   @Test
   public void testReturnPaymentPageConfigValue() {
-    var config = new ConfigValue("id", "paymentpage", "owner", "url", Map.of());
+    var config = new ConfigValue("id", "paymentpage", "owner", "url", Map.of(), List.of());
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(config)
     );
@@ -132,7 +133,7 @@ public class ConfigValueAbstractFactoryTest {
     );
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(
-        new ConfigValue("id", "widgets", "testuser", "url", configValues)
+        new ConfigValue("id", "widgets", "testuser", "url", configValues, List.of())
       )
     );
     var factory = new ConfigValueAbstractFactory(mockRepository);
@@ -152,7 +153,7 @@ public class ConfigValueAbstractFactoryTest {
     Map<String, Object> configValues = Map.of("loglevel", "info");
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(
-        new ConfigValue("id", "widgets", "testuser", "url", configValues)
+        new ConfigValue("id", "widgets", "testuser", "url", configValues, List.of())
       )
     );
     var factory = new ConfigValueAbstractFactory(mockRepository);
