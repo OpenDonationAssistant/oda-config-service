@@ -42,7 +42,8 @@ public class ConfigValue {
     this.ownerId = ownerId;
     this.url = url;
     this.value = value;
-    this.actions = actions;
+    // TODO dont like this shit
+    setActions(actions);
   }
 
   public String getId() {
@@ -90,6 +91,10 @@ public class ConfigValue {
   }
 
   public void setActions(List<Action> actions) {
+    if (actions == null) {
+      this.actions = List.of();
+      return;
+    }
     this.actions = actions;
   }
 
