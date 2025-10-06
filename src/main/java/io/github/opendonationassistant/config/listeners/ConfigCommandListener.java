@@ -118,7 +118,7 @@ public class ConfigCommandListener {
   private void handlePutCommand(ConfigCommand.PutKeyValue command) {
     log.info("Received ConfigPutCommand", Map.of("command", command));
     Optional<ConfigValue> config = factory.findExisting(
-      command.recipientId(),
+      command.ownerId(),
       command.name()
     );
     config.ifPresent(conf -> {

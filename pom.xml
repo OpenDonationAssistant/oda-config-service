@@ -31,7 +31,7 @@
     <dependency>
       <groupId>io.github.opendonationassistant</groupId>
       <artifactId>oda-rabbit-conf</artifactId>
-      <version>0.8.83</version>
+      <version>0.8.84</version>
     </dependency>
     <dependency>
       <groupId>org.jspecify</groupId>
