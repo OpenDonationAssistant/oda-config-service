@@ -10,6 +10,7 @@ import io.micronaut.messaging.annotation.MessageHeader;
 import io.micronaut.rabbitmq.annotation.Queue;
 import io.micronaut.rabbitmq.annotation.RabbitListener;
 import io.micronaut.serde.ObjectMapper;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
@@ -33,8 +34,13 @@ public class ConfigCommandListener {
   }
 
   @Queue(io.github.opendonationassistant.rabbit.Queue.Commands.CONFIG)
-  public void listen(byte[] command, @MessageHeader String type)
+  public void listen(byte[] command, @Nullable @MessageHeader String type)
     throws IOException {
+    if (type == null) {
+      handlePutCommand(
+        mapper.readValue(command, ConfigCommand.PutKeyValue.class)
+      ); // TODO переделать всех на PutKeyValue
+    }
     switch (type) {
       case "UpsertAction" -> {
         handleAddActionCommand(
