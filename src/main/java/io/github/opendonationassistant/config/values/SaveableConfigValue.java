@@ -1,5 +1,6 @@
 package io.github.opendonationassistant.config.values;
 
+import io.github.opendonationassistant.commons.logging.ODALogger;
 import io.github.opendonationassistant.config.ConfigRepository;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Optional;
 public class SaveableConfigValue extends ConfigValue {
 
   private ConfigRepository repository;
+  private final ODALogger log = new ODALogger(this);
 
   public SaveableConfigValue(
     String id,
@@ -25,5 +27,6 @@ public class SaveableConfigValue extends ConfigValue {
   public void save() {
     Optional<ConfigValue> existing = repository.find(getOwnerId(), getName());
     existing.ifPresentOrElse(repository::update, () -> repository.save(this));
+    log.debug("Saved config", Map.of("config", this));
   }
 }

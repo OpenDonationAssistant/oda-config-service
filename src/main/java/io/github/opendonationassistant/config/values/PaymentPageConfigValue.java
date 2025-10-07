@@ -81,8 +81,8 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     if (!found.get()) {
       updated.add(action);
     }
-    log.info("Action added", Map.of("action", action));
     setActions(updated);
+    log.info("Action added", Map.of("action", action));
   }
 
   public void removeAction(String id) {
