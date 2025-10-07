@@ -42,8 +42,7 @@ public class ConfigValue {
     this.ownerId = ownerId;
     this.url = url;
     this.value = value;
-    // TODO dont like this shit
-    setActions(actions);
+    this.actions = actions == null ? List.of() : actions;
   }
 
   public String getId() {
