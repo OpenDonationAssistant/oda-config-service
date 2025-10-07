@@ -67,7 +67,7 @@ public class ConfigCommandListener {
   }
 
   private void handleDeleteActionCommand(ConfigCommand.DeleteAction command) {
-    log.info("Received ConfigListUpsertCommand", Map.of("command", command));
+    log.info("Received ConfigDeleteActionCommand", Map.of("command", command));
     Optional<ConfigValue> config = factory.findExisting(
       command.recipientId(),
       "paymentpage"

@@ -1,5 +1,6 @@
 package io.github.opendonationassistant.config.values;
 
+import io.github.opendonationassistant.commons.logging.ODALogger;
 import io.github.opendonationassistant.config.ConfigRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +9,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PaymentPageConfigValue extends SaveableConfigValue {
+
+  private final ODALogger log = new ODALogger(this);
 
   public PaymentPageConfigValue(
     String id,
@@ -78,6 +81,7 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     if (!found.get()) {
       updated.add(action);
     }
+    log.info("Action added", Map.of("action", action));
     setActions(updated);
   }
 
