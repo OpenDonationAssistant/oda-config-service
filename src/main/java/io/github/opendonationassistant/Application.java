@@ -6,8 +6,11 @@ import io.micronaut.context.ApplicationContextConfigurer;
 import io.micronaut.context.annotation.ContextConfigurer;
 import io.micronaut.rabbitmq.connect.ChannelInitializer;
 import io.micronaut.runtime.Micronaut;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.inject.Singleton;
 
+@OpenAPIDefinition(info = @Info(title = "oda-config-service"))
 public class Application {
 
   @ContextConfigurer
