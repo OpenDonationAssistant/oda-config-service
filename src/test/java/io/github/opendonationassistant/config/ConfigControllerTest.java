@@ -52,7 +52,8 @@ public class ConfigControllerTest {
             "reel": "/topic/testuserreel",
             "goal": "/topic/testusergoal",
             "donaterstoplist": "/topic/testuserdonaterstoplist",
-            "variables":"/topic/testuservariables"
+            "variables":"/topic/testuservariables",
+            "actions":"/topic/testuser.actions"
           },
           "testkey":"testvalue",
           "loglevel":"error"
