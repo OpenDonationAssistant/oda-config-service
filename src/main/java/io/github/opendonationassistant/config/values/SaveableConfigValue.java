@@ -26,7 +26,10 @@ public class SaveableConfigValue extends ConfigValue {
 
   public void save() {
     Optional<ConfigValue> existing = repository.find(getOwnerId(), getName());
-    existing.ifPresentOrElse((old) -> repository.update(this), () -> repository.save(this));
+    existing.ifPresentOrElse(
+      old -> repository.update(this),
+      () -> repository.save(this)
+    );
     log.debug("Saved config", Map.of("config", this));
   }
 }
