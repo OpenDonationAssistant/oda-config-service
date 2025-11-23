@@ -10,6 +10,8 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.inject.Inject;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,11 @@ import java.util.Map;
 public class CreateConfig extends BaseController {
 
   private ConfigValueAbstractFactory factory;
+
+  @Inject
+  public CreateConfig(ConfigValueAbstractFactory factory) {
+    this.factory = factory;
+  }
 
   @Post("/config/commands/create-config")
   @Secured(SecurityRule.IS_ANONYMOUS)
