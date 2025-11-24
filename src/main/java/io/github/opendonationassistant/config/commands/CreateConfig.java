@@ -11,7 +11,6 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.inject.Inject;
-
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +35,11 @@ public class CreateConfig extends BaseController {
           "nickname",
           command.displayName(),
           "url",
-          List.of(
-            command
-              .socialLinks()
-              .stream()
-              .map(link -> Map.of(link.platform(), link.url()))
-              .toList()
-          )
+          command
+            .socialLinks()
+            .stream()
+            .map(link -> Map.of(link.platform(), link.url()))
+            .toList()
         )
       )).save();
     return HttpResponse.ok();
