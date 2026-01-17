@@ -79,6 +79,7 @@ public class WidgetsConfigValue extends SaveableConfigValue {
     );
     defaultValues.put("variables", "/topic/%svariables".formatted(ownerId));
     defaultValues.put("actions", "/topic/%s.actions".formatted(ownerId));
+    defaultValues.put("events", "/topic/%s.events".formatted(ownerId));
 
     return defaultValues;
   }
