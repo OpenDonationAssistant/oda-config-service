@@ -1,3 +1,4 @@
+# ODA Config Service
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/OpenDonationAssistant/oda-config-service)
 
 ## Micronaut 4.1.0 Documentation
