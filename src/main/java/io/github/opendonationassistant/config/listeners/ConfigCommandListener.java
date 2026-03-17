@@ -6,11 +6,11 @@ import io.github.opendonationassistant.config.ConfigValueAbstractFactory;
 import io.github.opendonationassistant.config.values.ConfigValue;
 import io.github.opendonationassistant.config.values.PaymentPageConfigValue;
 import io.github.opendonationassistant.events.config.ConfigCommand;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.messaging.annotation.MessageHeader;
 import io.micronaut.rabbitmq.annotation.Queue;
 import io.micronaut.rabbitmq.annotation.RabbitListener;
 import io.micronaut.serde.ObjectMapper;
-import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
@@ -34,34 +34,51 @@ public class ConfigCommandListener {
   }
 
   @Queue(io.github.opendonationassistant.rabbit.Queue.Commands.CONFIG)
-  public void listen(byte[] command, @Nullable @MessageHeader String type)
+  public void listen(byte[] message, @Nullable @MessageHeader String type)
     throws IOException {
     if (type == null) {
-      handlePutCommand(
-        mapper.readValue(command, ConfigCommand.PutKeyValue.class)
-      ); // TODO переделать всех на PutKeyValue
+      var command = mapper.readValue(message, ConfigCommand.PutKeyValue.class);
+      if (command != null) {
+        handlePutCommand(command); // TODO переделать всех на PutKeyValue
+      }
       return;
     }
     switch (type) {
       case "UpsertAction" -> {
-        handleAddActionCommand(
-          mapper.readValue(command, ConfigCommand.UpsertAction.class)
+        var command = mapper.readValue(
+          message,
+          ConfigCommand.UpsertAction.class
         );
+        if (command != null) {
+          handleAddActionCommand(command);
+        }
       }
       case "DeleteAction" -> {
-        handleDeleteActionCommand(
-          mapper.readValue(command, ConfigCommand.DeleteAction.class)
+        var command = mapper.readValue(
+          message,
+          ConfigCommand.DeleteAction.class
         );
+        if (command != null) {
+          handleDeleteActionCommand(command);
+        }
       }
       case "PutKeyValue" -> {
-        handlePutCommand(
-          mapper.readValue(command, ConfigCommand.PutKeyValue.class)
+        var command = mapper.readValue(
+          message,
+          ConfigCommand.PutKeyValue.class
         );
+        if (command != null) {
+          handlePutCommand(command);
+        }
       }
       default -> {
-        handlePutCommand(
-          mapper.readValue(command, ConfigCommand.PutKeyValue.class)
-        ); // TODO переделать всех на PutKeyValue
+        var command = mapper.readValue(
+          message,
+          ConfigCommand.PutKeyValue.class
+        );
+        if (command != null) {
+          handlePutCommand(command); // TODO переделать всех на PutKeyValue
+        }
       }
     }
   }

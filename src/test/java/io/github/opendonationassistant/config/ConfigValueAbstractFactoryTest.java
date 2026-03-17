@@ -43,7 +43,14 @@ public class ConfigValueAbstractFactoryTest {
 
   @Test
   public void testReturnPaymentPageConfigValue() {
-    var config = new ConfigValue("id", "paymentpage", "owner", "url", Map.of(), List.of());
+    var config = new ConfigValue(
+      "id",
+      "paymentpage",
+      "owner",
+      "url",
+      Map.of(),
+      List.of()
+    );
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(config)
     );
@@ -133,7 +140,14 @@ public class ConfigValueAbstractFactoryTest {
     );
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(
-        new ConfigValue("id", "widgets", "testuser", "url", configValues, List.of())
+        new ConfigValue(
+          "id",
+          "widgets",
+          "testuser",
+          "url",
+          configValues,
+          List.of()
+        )
       )
     );
     var factory = new ConfigValueAbstractFactory(mockRepository);
@@ -144,7 +158,9 @@ public class ConfigValueAbstractFactoryTest {
     ConfigValue fact = config.get();
     assertEquals(
       "sometestvalue",
-      ((Map<String, Object>) fact.getValue().get("topic")).get("alerts")
+      ((Map<String, Object>) fact
+          .getValue()
+          .getOrDefault("topic", Map.<String, Object>of())).get("alerts")
     );
   }
 
@@ -153,7 +169,14 @@ public class ConfigValueAbstractFactoryTest {
     Map<String, Object> configValues = Map.of("loglevel", "info");
     when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
       Optional.of(
-        new ConfigValue("id", "widgets", "testuser", "url", configValues, List.of())
+        new ConfigValue(
+          "id",
+          "widgets",
+          "testuser",
+          "url",
+          configValues,
+          List.of()
+        )
       )
     );
     var factory = new ConfigValueAbstractFactory(mockRepository);

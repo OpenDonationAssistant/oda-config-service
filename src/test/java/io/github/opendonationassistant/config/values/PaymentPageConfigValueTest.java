@@ -67,6 +67,9 @@ public class PaymentPageConfigValueTest {
     var repository = mock(ConfigRepository.class);
     var savedValues = ObjectMapper.getDefault()
       .readValue(DEFAULT_VALUE, Map.class);
+    if (savedValues == null) {
+      savedValues = new HashMap<>();
+    }
     var actual = new PaymentPageConfigValue(
       "id",
       "ownerId",
