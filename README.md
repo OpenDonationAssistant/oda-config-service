@@ -1,42 +1,54 @@
 # ODA Config Service
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/OpenDonationAssistant/oda-config-service)
 
-## Micronaut 4.1.0 Documentation
+## Running with Docker
 
-- [User Guide](https://docs.micronaut.io/4.1.0/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.1.0/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.1.0/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+### Pull the Docker Image
 
-- [Micronaut Maven Plugin documentation](https://micronaut-projects.github.io/micronaut-maven-plugin/latest/)
-## Feature security-oauth2 documentation
+```bash
+docker pull ghcr.io/opendonationassistant/oda-config-service:latest
+```
 
-- [Micronaut Security OAuth 2.0 documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth)
+### Required Environment Variables
 
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `RABBITMQ_HOST` | RabbitMQ host address | `localhost` |
+| `JDBC_URL` | PostgreSQL JDBC connection URL | `jdbc:postgresql://localhost/postgres?currentSchema=config` |
+| `JDBC_USER` | Database username | `postgres` |
+| `JDBC_PASSWORD` | Database password | `postgres` |
 
-## Feature maven-enforcer-plugin documentation
+### Running the Container
 
-- [https://maven.apache.org/enforcer/maven-enforcer-plugin/](https://maven.apache.org/enforcer/maven-enforcer-plugin/)
+```bash
+docker run -d \
+  --name oda-config-service \
+  -e RABBITMQ_HOST=your-rabbitmq-host \
+  -e JDBC_URL=jdbc:postgresql://your-postgres-host:5432/postgres?currentSchema=config \
+  -e JDBC_USER=your-db-user \
+  -e JDBC_PASSWORD=your-db-password \
+  -p 8080:8080 \
+  ghcr.io/opendonationassistant/oda-config-service:latest
+```
 
+### Using Docker Compose
 
-## Feature security-jwt documentation
+Create a `docker-compose.yml` file:
 
-- [Micronaut Security JWT documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)
+```yaml
+version: '3.8'
 
-
-## Feature micronaut-aot documentation
-
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
-
-
-## Feature serialization-jackson documentation
-
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
-
-
-## Feature http-client documentation
-
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient)
-
-
+services:
+  oda-config-service:
+    image: ghcr.io/opendonationassistant/oda-config-service:latest
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - JDBC_URL=jdbc:postgresql://postgres:5432/postgres?currentSchema=config
+      - JDBC_USER=postgres
+      - JDBC_PASSWORD=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+```
