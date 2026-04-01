@@ -33,7 +33,7 @@ public class ConfigCommandListener {
     this.repository = repository;
   }
 
-  @Queue(io.github.opendonationassistant.rabbit.Queue.Commands.CONFIG)
+  @Queue("commands.config")
   public void listen(byte[] message, @Nullable @MessageHeader String type)
     throws IOException {
     if (type == null) {

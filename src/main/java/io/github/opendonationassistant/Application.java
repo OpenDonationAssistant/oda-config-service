@@ -1,16 +1,23 @@
 package io.github.opendonationassistant;
 
-import io.github.opendonationassistant.rabbit.RabbitConfiguration;
+import static io.github.opendonationassistant.rabbit.Exchange.Exchange;
+
+import io.github.opendonationassistant.rabbit.AMQPConfiguration;
+import io.github.opendonationassistant.rabbit.Queue;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
 import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.context.annotation.Factory;
 import io.micronaut.rabbitmq.connect.ChannelInitializer;
 import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.inject.Singleton;
+import java.util.List;
+import java.util.Map;
 
 @OpenAPIDefinition(info = @Info(title = "oda-config-service"))
+@Factory
 public class Application {
 
   @ContextConfigurer
@@ -29,6 +36,9 @@ public class Application {
 
   @Singleton
   public ChannelInitializer rabbitConfiguration() {
-    return new RabbitConfiguration();
+    Queue commands = new Queue("commands.config");
+    return new AMQPConfiguration(
+      List.of(Exchange("commands", Map.of("*", commands)))
+    );
   }
 }
