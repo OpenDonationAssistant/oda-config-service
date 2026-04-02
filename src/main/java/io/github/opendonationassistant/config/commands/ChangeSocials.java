@@ -27,7 +27,7 @@ public class ChangeSocials extends BaseController {
 
   @Post("/config/commands/change-socials")
   @Secured(SecurityRule.IS_AUTHENTICATED)
-  public HttpResponse<Void> changeAgreement(
+  public HttpResponse<Void> changeSocials(
     Authentication auth,
     @Body ChangeSocialsCommand command
   ) {
@@ -47,8 +47,5 @@ public class ChangeSocials extends BaseController {
   }
 
   @Serdeable
-  public static record ChangeSocialsCommand(
-    String id,
-    Map<String, String> socials
-  ) {}
+  public static record ChangeSocialsCommand(Map<String, String> socials) {}
 }
