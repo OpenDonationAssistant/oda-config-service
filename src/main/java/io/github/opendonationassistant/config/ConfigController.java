@@ -51,11 +51,7 @@ public class ConfigController extends BaseController {
       .or(() -> Optional.ofNullable(ownerId))
       .flatMap(id -> factory.findExisting(id, name))
       .or(() ->
-        Optional.ofNullable(url).map(it ->
-          factory
-            .findByUrl(name, it)
-            .orElseGet(() -> factory.create(name, ownerId, it, new HashMap<>()))
-        )
+        Optional.ofNullable(url).flatMap(it -> factory.findByUrl(name, it))
       )
       .map(HttpResponse::ok)
       .orElse(HttpResponse.notFound());
