@@ -54,7 +54,8 @@ public class ConfigControllerTest {
             "donaterstoplist": "/topic/testuserdonaterstoplist",
             "variables":"/topic/testuservariables",
             "actions":"/topic/testuser.actions",
-            "events":"/topic/testuser.events"
+            "events":"/topic/testuser.events",
+            "streamelements":"/topic/testuser.streamelements"
           },
           "testkey":"testvalue",
           "loglevel":"error"
