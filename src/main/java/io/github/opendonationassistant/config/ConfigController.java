@@ -3,6 +3,7 @@ package io.github.opendonationassistant.config;
 import com.fasterxml.uuid.Generators;
 import io.github.opendonationassistant.commons.micronaut.BaseController;
 import io.github.opendonationassistant.config.values.ConfigValue;
+import io.github.opendonationassistant.config.values.WidgetsConfigValue;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -19,6 +20,7 @@ import io.micronaut.security.rules.SecurityRule;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller("/config")
@@ -47,8 +49,19 @@ public class ConfigController extends BaseController {
     if (auth == null && !"paymentpage".equals(name)) {
       return HttpResponse.unauthorized();
     }
-    return getOwnerId(auth)
-      .or(() -> Optional.ofNullable(ownerId))
+    var recipientId = getOwnerId(auth).or(() -> Optional.ofNullable(ownerId));
+    if ("widgets".equals(name)) {
+      return HttpResponse.ok(
+        new WidgetsConfigValue(
+          "id",
+          recipientId.get(),
+          "url",
+          Map.of(),
+          configRepository
+        )
+      );
+    }
+    return recipientId
       .flatMap(id -> factory.findExisting(id, name))
       .or(() ->
         Optional.ofNullable(url).flatMap(it -> factory.findByUrl(name, it))
