@@ -9,12 +9,9 @@ import static org.mockito.Mockito.when;
 import io.github.opendonationassistant.config.values.ConfigValue;
 import io.github.opendonationassistant.config.values.PaymentPageConfigValue;
 import io.github.opendonationassistant.config.values.WidgetsConfigValue;
-import io.micronaut.serde.ObjectMapper;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -76,49 +73,6 @@ public class ConfigValueAbstractFactoryTest {
     assertTrue(actual.isEmpty());
   }
 
-  // todo rewrite tests for widgets
-  @Test
-  @Disabled
-  public void testReturnDefaultValuesForWidgetsIfMissing() throws IOException {
-    when(mockRepository.find(Mockito.any(), Mockito.any())).thenReturn(
-      Optional.empty()
-    );
-    var factory = new ConfigValueAbstractFactory(mockRepository);
-
-    Optional<ConfigValue> config = factory.findExisting("testuser", "widgets");
-
-    assertTrue(config.isPresent());
-    assertEquals("widgets", config.get().getName());
-    assertEquals("testuser", config.get().getOwnerId());
-    // TODO: remove duplication from controller test with json
-    var expectedValue = ObjectMapper.getDefault()
-      .readValue(
-        """
-        {
-          "topic": {
-            "alerts": "/topic/testuseralerts",
-            "alertStatus": "/topic/testuseralertStatus",
-            "alertWidgetCommans": "/topic/testuseralertWidgetCommands",
-            "player": "/topic/testuserplayer",
-            "playerCommands": "/topic/testuserplayerCommands",
-            "media": "/topic/testusermedia",
-            "paymentWidgetCommands": "/topic/testuserpaymentWidgetCommands",
-            "mediaWidgetCommands": "/topic/testusermediaWidgetCommands",
-            "remoteplayerfeedback": "/topic/testuserremoteplayerfeedback",
-            "remoteplayer": "/topic/testuserremoteplayer",
-            "reel": "/topic/testuserreel",
-            "goal": "/topic/testusergoal",
-            "donaterstoplist": "/topic/testuserdonaterstoplist",
-            "variables":"/topic/testuservariables"
-          },
-          "loglevel":"error"
-        }
-        """,
-        Map.class
-      );
-    assertEquals(expectedValue, config.get().getValue());
-  }
-
   @Test
   public void testCreatingConfig() {
     var factory = new ConfigValueAbstractFactory(mockRepository);
@@ -130,6 +84,22 @@ public class ConfigValueAbstractFactoryTest {
     assertEquals("testuser.oda.digital", paymentConfig.getUrl());
     var otherConfig = factory.create("other", "testuser", "", Map.of());
     assertTrue(otherConfig instanceof ConfigValue);
+  }
+
+  @Test
+  public void testCreatingPaymentPageWithoutCasting() {
+    var factory = new ConfigValueAbstractFactory(mockRepository);
+
+    PaymentPageConfigValue paymentPage = factory.createPaymentPage(
+      "testuser",
+      "",
+      Map.of()
+    );
+
+    assertEquals("testuser.oda.digital", paymentPage.getUrl());
+    assertEquals("paymentpage", paymentPage.getName());
+    assertEquals("testuser", paymentPage.getOwnerId());
+    assertTrue(paymentPage.getId() != null && !paymentPage.getId().isBlank());
   }
 
   @Test

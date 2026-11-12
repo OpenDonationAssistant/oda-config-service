@@ -31,6 +31,7 @@ public class PaymentPageConfigValueTest {
             "limits.char": {"type":"fixed", "value":300},
             "media.requests.cost": 100,
             "media.requests.enabled": true,
+            "media.requests.showQueueSize": true,
             "media.requests.amount": 12,
             "media.requests.tooltip": "",
             "url":[
@@ -79,6 +80,46 @@ public class PaymentPageConfigValueTest {
       repository
     ).getValue();
     assertEquals(savedValues, actual);
+  }
+
+  @Test
+  public void testStoredLegacyMapGetsShowQueueSizeDefault() {
+    var repository = mock(ConfigRepository.class);
+    var savedValues = new HashMap<String, Object>();
+    savedValues.put("nickname", "ownerId");
+    var actual = new PaymentPageConfigValue(
+      "id",
+      "ownerId",
+      "url",
+      savedValues,
+      List.of(),
+      repository
+    ).getValue();
+    assertEquals(
+      Boolean.TRUE,
+      actual.get("media.requests.showQueueSize"),
+      "a config stored before the flag existed must default to showing the queue"
+    );
+  }
+
+  @Test
+  public void testStoredShowQueueSizeFalseOverridesDefault() {
+    var repository = mock(ConfigRepository.class);
+    var savedValues = new HashMap<String, Object>();
+    savedValues.put("media.requests.showQueueSize", false);
+    var actual = new PaymentPageConfigValue(
+      "id",
+      "ownerId",
+      "url",
+      savedValues,
+      List.of(),
+      repository
+    ).getValue();
+    assertEquals(
+      Boolean.FALSE,
+      actual.get("media.requests.showQueueSize"),
+      "an explicitly stored false must win over the default"
+    );
   }
 
   @Test

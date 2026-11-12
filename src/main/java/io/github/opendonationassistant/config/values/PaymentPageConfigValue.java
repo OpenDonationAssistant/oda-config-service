@@ -38,6 +38,7 @@ public class PaymentPageConfigValue extends SaveableConfigValue {
     values.put("nickname", ownerId);
     values.put("media.requests.cost", 100);
     values.put("media.requests.enabled", true);
+    values.put("media.requests.showQueueSize", true);
     values.put("media.requests.disabled.permanently", true);
     values.put("media.requests.amount", 12);
     values.put("media.requests.tooltip", "");

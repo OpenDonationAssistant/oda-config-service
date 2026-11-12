@@ -6,6 +6,7 @@ import io.github.opendonationassistant.config.values.ConfigValue;
 import io.github.opendonationassistant.config.values.WidgetsConfigValue;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -19,7 +20,6 @@ import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -99,9 +99,16 @@ public class ConfigController extends BaseController {
     if (ownerId.isEmpty()) {
       return HttpResponse.unauthorized();
     }
+    var existing = configRepository.findById(id);
+    if (
+      existing.isPresent() &&
+      !ownerId.get().equals(existing.get().getOwnerId())
+    ) {
+      return HttpResponse.status(HttpStatus.FORBIDDEN);
+    }
     configValue.setId(id);
     configValue.setOwnerId(ownerId.get());
-    if (configRepository.existsById(id)) {
+    if (existing.isPresent()) {
       configRepository.update(configValue);
     } else {
       configRepository.save(configValue);

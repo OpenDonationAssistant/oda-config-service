@@ -43,25 +43,43 @@ public class ConfigValueAbstractFactory {
     @Nonnull String url,
     @Nonnull Map<String, Object> value
   ) {
-    var id = Generators.timeBasedEpochGenerator().generate().toString();
     return switch (name) {
-      case "paymentpage" -> new PaymentPageConfigValue(
-        id,
-        ownerId,
-        url.isBlank() ? "%s.oda.digital".formatted(ownerId) : url,
-        value,
-        List.of(),
-        repository
-      );
+      case "paymentpage" -> createPaymentPage(ownerId, url, value);
       case "widgets" -> new WidgetsConfigValue(
-        id,
+        newId(),
         ownerId,
         url,
         value,
         repository
       );
-      default -> new ConfigValue(id, name, ownerId, url, value, List.of());
+      default -> new ConfigValue(
+        newId(),
+        name,
+        ownerId,
+        url,
+        value,
+        List.of()
+      );
     };
+  }
+
+  public @Nonnull PaymentPageConfigValue createPaymentPage(
+    @Nonnull String ownerId,
+    @Nonnull String url,
+    @Nonnull Map<String, Object> value
+  ) {
+    return new PaymentPageConfigValue(
+      newId(),
+      ownerId,
+      url.isBlank() ? "%s.oda.digital".formatted(ownerId) : url,
+      value,
+      List.of(),
+      repository
+    );
+  }
+
+  private String newId() {
+    return Generators.timeBasedEpochGenerator().generate().toString();
   }
 
   private ConfigValue construct(ConfigValue widget) {
